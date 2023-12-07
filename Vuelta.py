@@ -4,12 +4,12 @@ import math
 
 objetos=[]
 numerosats=5
-velocidades=random.randint(0,100)
+
 
 class Objetos:
     def __init__(self):
-        self.posx = 512
-        self.posy = 512
+        self.centrox = 512
+        self.centroy = 512
         self.radioS = 30
         self.radioM = 300
         self.direccion = random.randint(0,360)
@@ -18,27 +18,32 @@ class Objetos:
         self.color3="grey"
         self.grosorborde=10
         self.entidad=""
+        self.velocidad = random.randint(1,5)
+        self.angulo=random.randint(0,360)
+        self.a=random.randint(1,5)
+        self.b=random.randint(1,5)
     def visualizarT(self):
         lienzo.create_oval(
-            self.posx-self.radioM/2,
-            self.posy-self.radioM/2,
-            self.posx+self.radioM/2,
-            self.posy+self.radioM/2,
+            self.centrox-self.radioM/2,
+            self.centroy-self.radioM/2,
+            self.centrox+self.radioM/2,
+            self.centroy+self.radioM/2,
             fill=self.color1,
             outline=self.color2,
             width=self.grosorborde)
     def visualizarS(self):
         self.entidad=lienzo.create_oval(
-            self.posx-self.radioS/2,
-            self.posy-self.radioS/2,
-            self.posx+self.radioS/2,
-            self.posy+self.radioS/2,
+            self.centrox-self.radioS/2,
+            self.centroy-self.radioS/2,
+            self.centrox+self.radioS/2,
+            self.centroy+self.radioS/2,
             fill=self.color3)
     def mueve(self):
-        lienzo.move(self.entidad,math.cos(self.direccion),math.sin(self.direccion))
-        self.posx += math.cos(self.direccion)
-        self.posy +=math.sin(self.direccion)
-
+        self.angulo += math.radians(self.velocidad)
+        x = self.centrox + self.a * math.cos(self.angulo)
+        y = self.centroy + self.b * math.sin(self.angulo)
+        lienzo.move(self.entidad, x - self.centrox, y - self.centroy)
+        self.centrox, self.centroy = x, y
         
 raiz=tk.Tk()
 
@@ -55,11 +60,12 @@ for i in range(0,numerosats):
 for elemento in objetos:
     elemento.visualizarS()
 
-def velocidad(velocidades):    
+def velocidad():    
     for objeto in objetos:
         objeto.mueve()
-    raiz.after(velocidades,velocidad)
+    raiz.after(10,velocidad)
 
-bucle()
+print(objetos)
+velocidad()
 
 raiz.mainloop()

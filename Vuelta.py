@@ -1,9 +1,10 @@
 import tkinter as tk
 import random
 import math
+import json
 
 objetos=[]
-numerosats=5
+numerosats=10
 
 
 class Objetos:
@@ -18,10 +19,10 @@ class Objetos:
         self.color3="grey"
         self.grosorborde=10
         self.entidad=""
-        self.velocidad = random.randint(1,5)
+        self.velocidad = random.randint(1,10)
         self.angulo=random.randint(0,360)
-        self.a=random.randint(1,5)
-        self.b=random.randint(1,5)
+        self.a=random.randint(2,8)
+        self.b=random.randint(1,4)
     def visualizarT(self):
         lienzo.create_oval(
             self.centrox-self.radioM/2,
@@ -43,8 +44,14 @@ class Objetos:
         x = self.centrox + self.a * math.cos(self.angulo)
         y = self.centroy + self.b * math.sin(self.angulo)
         lienzo.move(self.entidad, x - self.centrox, y - self.centroy)
-        self.centrox, self.centroy = x, y
-        
+
+def guardarPosicion():
+    print("Guardar posicion")
+    cadena=json.dumps([vars(objeto) for i in objetos])
+    archivo=open("C:\\Users\\fonsi\\Desktop\\ESTUDIO\\IMF 2\\ACCESO A DATOS\\Practicas\\Practica6AD\\jugadores.json","w")
+    archivo.write(cadena)
+    archivo.close()
+                 
 raiz=tk.Tk()
 
 #Creo lienzo
@@ -53,6 +60,9 @@ lienzo.pack()
 
 objeto=Objetos()
 objeto.visualizarT()
+
+boton = tk.Button(raiz,text="Guardar", command=guardarPosicion)
+boton.pack()
 
 for i in range(0,numerosats):
     objetos.append(Objetos())
@@ -65,7 +75,6 @@ def velocidad():
         objeto.mueve()
     raiz.after(10,velocidad)
 
-print(objetos)
 velocidad()
 
 raiz.mainloop()

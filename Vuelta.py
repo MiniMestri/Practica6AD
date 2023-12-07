@@ -20,7 +20,6 @@ class Objetos:
         self.grosorborde=10
         self.entidad=""
         self.velocidad = random.randint(1,10)
-        self.angulo=random.randint(0,360)
         self.a=random.randint(2,8)
         self.b=random.randint(1,4)
         
@@ -46,9 +45,9 @@ class Objetos:
         
 #Movimientos elípticos de los satélites
     def mueve(self):
-        self.angulo += math.radians(self.velocidad)
-        x = self.centrox + self.a * math.cos(self.angulo)
-        y = self.centroy + self.b * math.sin(self.angulo)
+        self.direccion += math.radians(self.velocidad)
+        x = self.centrox + self.a * math.cos(self.direccion)
+        y = self.centroy + self.b * math.sin(self.direccion)
         lienzo.move(self.entidad, x - self.centrox, y - self.centroy)
 
 #Método guardar posición de cada objeto (satélites)

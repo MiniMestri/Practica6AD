@@ -54,7 +54,7 @@ class Objetos:
 def guardarPosicion():
     print("Guardar posicion")
     cadena=json.dumps([vars(objeto) for i in objetos])
-    archivo=open("C:\\Users\\fonsi\\Desktop\\ESTUDIO\\IMF 2\\ACCESO A DATOS\\Practicas\\Practica6AD\\jugadores.json","w")
+    archivo=open("C:\\Users\\fonsi\\Desktop\\ESTUDIO\\IMF 2\\ACCESO A DATOS\\Practicas\\Practica6AD\\satelite.json","w")
     archivo.write(cadena)
     archivo.close()
                  
